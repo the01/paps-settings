@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<link href="{{ url_for('static', filename = 'css/widget_seats.css') }}" rel="stylesheet" media="screen" />
+<script src="{{ url_for('static', filename = 'js/audience-plugin.js') }}"></script>
+<script src="{{ url_for('static', filename = 'js/Sortable.js') }}"></script>
+<script src="{{ url_for('static', filename = 'js/knockout-sortable.js') }}"></script>
+<script src="{{ url_for('static', filename = 'js/widget-seats.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row row-offcanvas row-offcanvas-left">
+    <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+        <div id="plugin_list_container" class="list-group" data-aud-api-plugin="{{ url_for('APIPlugins') }}">
+            <!-- ko foreach: plugins -->
+            <a class="list-group-item" data-bind="click: $parent.link_click, text: name, attr: {'href': uri}"></a>
+            <!-- /ko -->
+        </div>
+    </div>
+    <!--/span-->
+    <div class="col-xs-12 col-sm-9">
+        <p class="pull-left visible-xs toggler">
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">
+                Toggle nav
+            </button>
+        </p>
+        <div id="plugin_container" class="row-fluid">
+            <div id="plugin_info" class="jumbotron">
+                <h2 id="plugin_name">
+                    No plugin selected
+                </h2>
+                <div id="plugin_description">
+
+                </div>
+            </div>
+            <div id="plugin_widget" class="well">
+
+            </div>
+        </div>
+        <div id="widget_container" class="row-fluid">
+            <div id="widget_seats">
+                <div id="widget_seats_placed" class="row">
+                    <!-- ko foreach: groups -->
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <div class="seats_list panel panel-info">
+                            <div class="panel-heading">
+                                <b data-bind="visible: !show_input(), text: name, click: edit">&nbsp;</b>
+                                <input class="form-control" type="text" placeholder="No group name" data-bind="visible: show_input, value: name, hasFocus: editing" />
+                                <a class="btn btn-danger btn-xs pull-right" href="#" data-bind="click: $parent.group_remove">
+                                    <i class="fa fa-trash-o fa-lg"></i>
+                                </a>
+                            </div>
+                            <ul class="list-group" data-bind="sortable: {foreach: people, options: {handle: '.fa-bars', onAdd: onAdd, onRemove: onRemove, animation: 150}}">
+                                <li class="list-group-item vcenter">
+                                    <!-- ko ifnot: fake-->
+                                    <i class="fa fa-bars fa-fw fa-2x"></i>
+                                    <!-- /ko -->
+                                    <span class="" data-bind="text: format()"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /ko -->
+                    <div class="clearfix visible-xs-block visible-sm-block visible-md-block visible-lg-block"></div>
+                    <div id="seats_list_add" class="col-xs-12 col-sm-4 col-md-3 col-lg-3">
+                        <div class="seats_list panel panel-default">
+                            <div class="panel-heading">
+                                Add new group
+                            </div>
+                            <div class="panel-body">
+                                <form id="seats_list_group_add" class="form-inline" data-bind="submit: group_form_add">
+                                    <div class="input-group">
+                                        <input id="seats_list_group_add_name" value="" class="form-control" type="text" placeholder="Group name">
+                                        <a type="submit" class="input-group-addon" href="#" onclick="$('form#seats_list_group_add').submit();">
+                                            <i class="fa fa-plus-square fa-align-center fa-adjust"></i>
+                                        </a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="widget_seats_unplaced" class="well row" data-bind="with: nypp">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <div class="seats_list panel panel-primary">
+                            <div class="panel-heading">
+                                <span data-bind="text: name"></span>
+                            </div>
+                            <ul class="list-group" data-bind="sortable: {foreach: people, options: {handle: '.fa-bars', onAdd: onAdd, onRemove: onRemove, animation: 150}}">
+                                <li class="list-group-item vcenter">
+                                    <!-- ko ifnot: fake-->
+                                    <i class="fa fa-bars fa-fw fa-2x"></i>
+                                    <!-- /ko -->
+                                    <span style="height: 100%" class="" data-bind="text: format()"></span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/row-->
+    </div>
+    <!--/span-->
+</div><!--/row-->
+
+<script>
+    var plvm = new AUDPlugin.PluginListViewModel("{{ url_for('APIPlugins') }}");
+    /*
+     $("#plugin_list_container a").click(function(e) {
+     console.debug("MEEEEEEEEEEEEEEEEEE");
+     // stop link
+     e.preventDefault();
+     //var detail = $(this).next('.post-detail');
+     $("#plugin_list_container a").removeClass("active");
+     var link = $(this);
+     var href = link.attr("href");
+     link.addClass("active");
+     AUDPlugin.plugin_load(href);
+     });
+     */
+    ko.applyBindings(plvm, $("#plugin_list_container")[0]);
+</script>
+{% endblock %}

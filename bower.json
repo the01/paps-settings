@@ -1,0 +1,29 @@
+{
+  "name": "paps-settings",
+  "description": "Audience participation settings",
+  "main": "index.js",
+  "authors": [
+    "d01 <jungflor@gmail.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.0",
+    "knockout": "^3.4.0",
+    "bootstrap": "^3.3.6",
+    "font-awesome": "fontawesome#^4.5.0"
+  }
+}

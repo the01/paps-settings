@@ -1,0 +1,22 @@
+{
+  "name": "paps-settings",
+  "version": "1.0.0",
+  "description": "Audience participation settings plugin",
+  "main": "index.js",
+  "directories": {
+
+  },
+  "scripts": {
+    "eslint": "eslint app/static/js/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@serv.home.lan:/srv/git/paps-settings.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "bower": "^1.7.7",
+    "eslint": "^1.10.3"
+  }
+}
