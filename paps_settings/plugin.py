@@ -8,8 +8,8 @@ __author__ = "d01"
 __email__ = "jungflor@gmail.com"
 __copyright__ = "Copyright (C) 2015-16, Florian JUNG"
 __license__ = "MIT"
-__version__ = "0.1.0"
-__date__ = "2016-03-31"
+__version__ = "0.1.1"
+__date__ = "2016-04-02"
 # Created: 2015-06-27 17:33
 
 import logging
@@ -102,7 +102,7 @@ class SettingsPlugin(Plugin):
         :param plugin_name: Name of the plugin to find
         :type plugin_name: str | None
         :return: Plugin or None and error message
-        :rtype: (paps.crowd.pluginInterface.Plugin | None, str)
+        :rtype: (settable_plugin.SettablePlugin | None, str)
         """
         if not plugin_name:
             return None, u"Plugin name not set"
@@ -130,9 +130,11 @@ class SettingsPlugin(Plugin):
         }
         if msg == "plugin_list":
             res['plugin_names'] = []
-            # generate list of plugins available for frontend
+            # Generate list of plugins available for frontend
             for plugin in self.controller.plugins:
-                res['plugin_names'].append(plugin.name)
+                # Limit to plugins that work with this
+                if isinstance(plugin, SettablePlugin):
+                    res['plugin_names'].append(plugin.name)
             return res
         elif msg == "plugin_get":
             res['plugin'] = {}
@@ -243,7 +245,7 @@ class SettingsPlugin(Plugin):
                 return res
             return {}
         else:
-            self.error(u"Unkown cmd '{}'\n{}".format(msg, payload))
+            self.error(u"Unknown cmd '{}'\n{}".format(msg, payload))
         return {}
 
     def _reactor_start(self):
@@ -269,8 +271,7 @@ class SettingsPlugin(Plugin):
         # observer.start()
 
         self._factory = WebSocketClientFactory(
-            u"ws://{}:{}{}".format(self._host, self._port, self._ws_path),
-            debug=self._is_debug
+            u"ws://{}:{}{}".format(self._host, self._port, self._ws_path)
         )
 
         self._factory.protocol = PluginClientProtocol

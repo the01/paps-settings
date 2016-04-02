@@ -8,8 +8,8 @@ __author__ = "d01"
 __email__ = "jungflor@gmail.com"
 __copyright__ = "Copyright (C) 2015-16, Florian JUNG"
 __license__ = "MIT"
-__version__ = "0.2.5a0"
-__date__ = "2016-03-31"
+__version__ = "0.2.6a0"
+__date__ = "2016-04-02"
 # Created: 2015-06-27 17:33
 
 import logging

@@ -8,8 +8,8 @@ __author__ = "d01"
 __email__ = "jungflor@gmail.com"
 __copyright__ = "Copyright (C) 2015-16, Florian JUNG"
 __license__ = "MIT"
-__version__ = "0.1.0"
-__date__ = "2016-04-01"
+__version__ = "0.1.1"
+__date__ = "2016-04-02"
 # Created: 2015-06-25 02:09
 """ Webserver serving the plugin website """
 
@@ -62,9 +62,7 @@ def create_server(
 
     # Create a Twisted Web resource for our WebSocket server
     ws_factory = WebSocketServerFactory(
-        u"ws://{}:{}".format(host, port),
-        debug=debug,
-        debugCodePaths=debug
+        u"ws://{}:{}".format(host, port)
     )
 
     ws_factory.protocol = PluginServerProtocol
