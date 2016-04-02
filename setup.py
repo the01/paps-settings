@@ -9,8 +9,8 @@ __author__ = "d01 <Florian Jung>"
 __email__ = "jungflor@gmail.com"
 __copyright__ = "Copyright (C) 2016, Florian JUNG"
 __license__ = "MIT"
-__version__ = "0.1.2"
-__date__ = "2016-04-01"
+__version__ = "0.1.3"
+__date__ = "2016-04-02"
 # Created: 2016-03-29 06:12
 
 try:
@@ -19,6 +19,7 @@ except ImportError:
     from distutils.core import setup
 import sys
 import os
+import re
 
 
 if sys.argv[-1] == "build":
@@ -29,13 +30,11 @@ def get_version():
     """
     Parse the version information from the init file
     """
-    import os
-    import re
     version_file = os.path.join("paps_settings", "__init__.py")
     initfile_lines = open(version_file, 'rt').readlines()
-    vsre = r"^__version__ = ['\"]([^'\"]*)['\"]"
+    version_reg = r"^__version__ = ['\"]([^'\"]*)['\"]"
     for line in initfile_lines:
-        mo = re.search(vsre, line, re.M)
+        mo = re.search(version_reg, line, re.M)
         if mo:
             return mo.group(1)
     raise RuntimeError(
