@@ -9,8 +9,8 @@ __author__ = "d01 <Florian Jung>"
 __email__ = "jungflor@gmail.com"
 __copyright__ = "Copyright (C) 2016, Florian JUNG"
 __license__ = "MIT"
-__version__ = "0.1.3"
-__date__ = "2016-04-02"
+__version__ = "0.1.4"
+__date__ = "2016-04-18"
 # Created: 2016-03-29 06:12
 
 try:
@@ -42,14 +42,21 @@ def get_version():
     )
 
 
+def get_file(path):
+    with open(path, "r") as f:
+        return f.read()
+
+
 version = get_version()
+readme = get_file("README.rst")
 requirements = open("plugin-requirements.txt", "r").read().split("\n")
+
 
 setup(
     name="paps-settings",
     version=version,
     description="Settings plugin for paps",
-    long_description="",
+    long_description=readme,
     author=__author__,
     author_email=__email__,
     url="https://github.com/the01/paps-settings",
