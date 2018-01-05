@@ -1,2 +1,2 @@
 flake8==3.5.0
-pep8-naming
+pep8-naming==0.5.0
