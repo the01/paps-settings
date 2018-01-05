@@ -6,4 +6,4 @@ flask==0.12.2
 twisted==17.9.0
 autobahn==17.10.1
 flask-restful>=0.3.4, <0.4
-flask-bower>=1.2.1,<1.3
+flask-bower==1.3.0
